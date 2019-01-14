@@ -162,7 +162,7 @@ def train_model(model, dataloaders, dataset_sizes, criterion, optimizer, schedul
 	return model
 
 
-def do_deep_learning(model, trainloader, validloader, epochs, print_every, criterion, optimizer, scheduler, device='cpu'):
+def do_deep_learning(model, trainloader, validloader, epochs, print_every, criterion, optimizer, device='cpu'):
 	epochs = int(epochs)
 	print_every = print_every
 	steps = 0
@@ -172,7 +172,6 @@ def do_deep_learning(model, trainloader, validloader, epochs, print_every, crite
 
 	for e in range(epochs):
 		running_loss = 0
-		scheduler.step()
 		model.train()
 		for ii, (inputs, labels) in enumerate(trainloader):
 			steps += 1
@@ -238,7 +237,6 @@ def check_accuracy_on_test(model, testloader, device='cuda'):
 			_, predicted = torch.max(outputs.data, 1)
 			total += labels.size(0)
 			correct += (predicted == labels).sum().item()
-	model.train()
 	print('Accuracy of the network on the  test images: %d %%' % (100 * correct / total))
 
 

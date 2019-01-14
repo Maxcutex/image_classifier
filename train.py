@@ -1,15 +1,12 @@
 from get_input_arg import *
 from train_utils import *
 from workspace_utils import active_session
-from torch.optim import lr_scheduler
+#from torch.optim import lr_scheduler
 
 
 def main():
 	# accept arguments from command line
 	in_arg = get_input_args()
-
-	# check the argument sent in
-	check_command_line_arguments(in_arg)
 
 	data_dir = in_arg.data_directory
 	train_dir = data_dir + '/train'
@@ -28,14 +25,14 @@ def main():
 		model = model.cuda()
 	criterion = nn.NLLLoss()
 	optimizer = optim.Adam(model.classifier.parameters(), lr=float(in_arg.learning_rate))
-	scheduler = lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
+	#scheduler = lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
 
 	with active_session():
 		do_deep_learning(
-			model, dataloaders['train'], dataloaders['valid'], in_arg.epochs, 40, criterion, optimizer, scheduler, in_arg.gpu
+			model, dataloaders['train'], dataloaders['valid'], in_arg.epochs, 40, criterion, optimizer, in_arg.gpu
 		)
 		# model = train_model(model, dataloaders, dataset_sizes, criterion, optimizer, sched, int(in_arg.epochs), in_arg.gpu)
-	model.train()
+
 	check_accuracy_on_test(model, dataloaders['test'], in_arg.gpu)
 
 	model.class_to_idx = image_datasets['train'].class_to_idx

@@ -26,6 +26,8 @@ def main():
         print("Flower Name: ", f)
         print("Label ID: ", l)
         print("Probabilitity: ", p)
+        print("=" * 20)
+        print("=" * 40)
 
 if __name__ == "__main__":
     main()
